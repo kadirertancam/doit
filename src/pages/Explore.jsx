@@ -14,7 +14,7 @@ import './Explore.css';
 function Explore() {
     const navigate = useNavigate();
     const { getDailyTopics, getTrendingTopics, selectedHashtag, selectHashtag, clearSelection, getTopicById, updateVideoCounts, isAIGenerated, isLoading: hashtagLoading, regenerateWithAI } = useHashtagStore();
-    const { getVideosByHashtag, upvoteVideo, downvoteVideo, addComment, getVideoById, fetchVideos, videos, isLoading, fetchUserVotes, userVotedVideoIds } = useVideoStore();
+    const { getVideosByHashtag, upvoteVideo, downvoteVideo, addComment, getVideoById, fetchVideos, videos, isLoading, fetchUserVotes, userVotedVideoIds, votesLoading } = useVideoStore();
     const { addXP } = useUserStore();
     const { isAuthenticated, profile } = useAuthStore();
 
@@ -61,11 +61,18 @@ function Explore() {
             setShowLoginPrompt(true);
             return;
         }
+
+        // Prevent duplicate votes - check both local state and loading state
+        if (userVotedVideoIds.includes(videoId)) {
+            return;
+        }
+
         if (type === 'up') {
             upvoteVideo(videoId, profile?.id);
             addXP(5);
         } else {
             downvoteVideo(videoId, profile?.id);
+            addXP(2); // Downvote için de XP ver (tutarlılık)
         }
     };
 
@@ -142,22 +149,31 @@ function Explore() {
                             </div>
 
                             <div className="video-actions">
-                                <button
-                                    className={`action-btn upvote-btn ${!isAuthenticated || userVotedVideoIds.includes(video.id) ? 'disabled' : ''}`}
-                                    onClick={() => !userVotedVideoIds.includes(video.id) && handleVote(video.id, 'up')}
-                                    disabled={userVotedVideoIds.includes(video.id)}
-                                >
-                                    <ThumbsUp size={20} />
-                                    {userVotedVideoIds.includes(video.id) ? 'Beğendin' : 'Beğen'}
-                                </button>
-                                <button
-                                    className={`action-btn downvote-btn ${!isAuthenticated || userVotedVideoIds.includes(video.id) ? 'disabled' : ''}`}
-                                    onClick={() => !userVotedVideoIds.includes(video.id) && handleVote(video.id, 'down')}
-                                    disabled={userVotedVideoIds.includes(video.id)}
-                                >
-                                    <ThumbsDown size={20} />
-                                    Beğenme
-                                </button>
+                                {isAuthenticated && votesLoading ? (
+                                    <div className="votes-loading">
+                                        <Loader size={16} className="spinner" />
+                                        <span>Oylar yükleniyor...</span>
+                                    </div>
+                                ) : (
+                                    <>
+                                        <button
+                                            className={`action-btn upvote-btn ${!isAuthenticated || userVotedVideoIds.includes(video.id) ? 'disabled' : ''}`}
+                                            onClick={() => handleVote(video.id, 'up')}
+                                            disabled={!isAuthenticated || userVotedVideoIds.includes(video.id)}
+                                        >
+                                            <ThumbsUp size={20} />
+                                            {userVotedVideoIds.includes(video.id) ? 'Beğendin' : 'Beğen'}
+                                        </button>
+                                        <button
+                                            className={`action-btn downvote-btn ${!isAuthenticated || userVotedVideoIds.includes(video.id) ? 'disabled' : ''}`}
+                                            onClick={() => handleVote(video.id, 'down')}
+                                            disabled={!isAuthenticated || userVotedVideoIds.includes(video.id)}
+                                        >
+                                            <ThumbsDown size={20} />
+                                            {userVotedVideoIds.includes(video.id) ? 'Beğenmedin' : 'Beğenme'}
+                                        </button>
+                                    </>
+                                )}
                             </div>
 
                             {!isAuthenticated && (
