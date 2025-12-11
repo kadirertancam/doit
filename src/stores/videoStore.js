@@ -7,9 +7,20 @@ export const useVideoStore = create((set, get) => ({
     isLoading: false,
     votesLoading: true, // New state to track if votes are loaded
     error: null,
+    lastFetchTime: null, // Cache timestamp to prevent redundant fetches
+    CACHE_DURATION: 30000, // 30 seconds cache
 
-    // Fetch videos voted by user
+    lastVotesFetchUserId: null, // Track which user's votes are cached
+
+    // Fetch videos voted by user (with cache)
     fetchUserVotes: async (userId) => {
+        const { lastVotesFetchUserId, userVotedVideoIds, votesLoading } = get();
+
+        // Skip if already loading or same user's votes are cached
+        if (votesLoading === false && lastVotesFetchUserId === userId && userVotedVideoIds.length >= 0) {
+            return;
+        }
+
         set({ votesLoading: true });
         try {
             const { data, error } = await supabase
@@ -20,15 +31,26 @@ export const useVideoStore = create((set, get) => ({
             if (error) throw error;
 
             const votedIds = data.map(v => v.video_id);
-            set({ userVotedVideoIds: votedIds, votesLoading: false });
+            set({ userVotedVideoIds: votedIds, votesLoading: false, lastVotesFetchUserId: userId });
         } catch (error) {
             console.error('Error fetching user votes:', error);
             set({ votesLoading: false });
         }
     },
 
-    // Fetch all videos from Supabase
-    fetchVideos: async () => {
+    // Fetch all videos from Supabase (with cache)
+    fetchVideos: async (force = false) => {
+        const { lastFetchTime, CACHE_DURATION, videos, isLoading } = get();
+        const now = Date.now();
+
+        // Skip if already loading
+        if (isLoading) return;
+
+        // Skip if cache is still valid and not forcing refresh
+        if (!force && lastFetchTime && videos.length > 0 && (now - lastFetchTime) < CACHE_DURATION) {
+            return;
+        }
+
         set({ isLoading: true });
         try {
             const { data, error } = await supabase
@@ -70,7 +92,7 @@ export const useVideoStore = create((set, get) => ({
                 createdAt: v.created_at,
             }));
 
-            set({ videos, isLoading: false });
+            set({ videos, isLoading: false, lastFetchTime: Date.now() });
         } catch (error) {
             console.error('Error fetching videos:', error);
             set({ error: error.message, isLoading: false });

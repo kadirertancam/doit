@@ -355,13 +355,13 @@ function Profile() {
                                 </div>
                             ) : (
                                 <div className="videos-grid">
-                                    {userVideos.map((video, index) => (
+                                    {userVideos.map((video) => (
                                         <motion.div
                                             key={video.id}
                                             className="video-card"
-                                            initial={{ opacity: 0, scale: 0.9 }}
-                                            animate={{ opacity: 1, scale: 1 }}
-                                            transition={{ delay: index * 0.05 }}
+                                            initial={{ opacity: 0 }}
+                                            animate={{ opacity: 1 }}
+                                            transition={{ duration: 0.15 }}
                                             onClick={() => setPlayingVideo(video)}
                                         >
                                             <img src={video.thumbnailUrl} alt="Video thumbnail" />

@@ -28,19 +28,18 @@ function Home() {
     const trendingTopics = getTrendingTopics();
     const topVideos = getTopVideos(5);
 
+    // Simplified animations for mobile performance
     const containerVariants = {
         hidden: { opacity: 0 },
         visible: {
             opacity: 1,
-            transition: {
-                staggerChildren: 0.1
-            }
+            transition: { duration: 0.2 }
         }
     };
 
     const itemVariants = {
-        hidden: { opacity: 0, y: 20 },
-        visible: { opacity: 1, y: 0 }
+        hidden: { opacity: 0 },
+        visible: { opacity: 1, transition: { duration: 0.15 } }
     };
 
     const handleHashtagClick = (hashtagId) => {
