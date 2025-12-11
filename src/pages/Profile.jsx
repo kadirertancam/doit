@@ -4,7 +4,7 @@ import {
     Camera, Edit2, Settings, LogOut, Award, Flame, Trophy,
     Target, MapPin, Link as LinkIcon, Instagram, Twitter,
     X, Check, ChevronRight, Star, Zap, Medal, Crown, LogIn,
-    Plus, Trash2, Play, Video
+    Plus, Trash2, Play, Video, Loader
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../stores/authStore';
@@ -66,8 +66,8 @@ function Profile() {
         fetchVideos();
     }, []);
 
-    // Not authenticated - show login prompt (same pattern as Challenge.jsx)
-    if (!isAuthenticated) {
+    // Not authenticated or no profile - show login prompt
+    if (!isAuthenticated || !currentProfile) {
         return (
             <motion.div
                 className="page profile-page"
