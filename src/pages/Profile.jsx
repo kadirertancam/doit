@@ -67,6 +67,42 @@ function Profile() {
         fetchVideos();
     }, []);
 
+    // Loading state
+    if (isLoading) {
+        return (
+            <div className="page profile-page">
+                <div className="loading-state">
+                    <Loader size={32} className="spinner" />
+                    <p>Yükleniyor...</p>
+                </div>
+            </div>
+        );
+    }
+
+    // Not authenticated - show login prompt
+    if (!isAuthenticated || !currentProfile) {
+        return (
+            <div className="page profile-page">
+                <div className="container">
+                    <div className="login-required">
+                        <User size={64} className="login-icon" />
+                        <h2>Giriş Yapın</h2>
+                        <p>Profilinizi görüntülemek için giriş yapmanız gerekiyor.</p>
+                        <div className="login-actions">
+                            <button className="btn btn-primary" onClick={() => navigate('/login')}>
+                                <LogIn size={18} />
+                                Giriş Yap
+                            </button>
+                            <button className="btn btn-secondary" onClick={() => navigate('/register')}>
+                                Kayıt Ol
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     const handleEditOpen = () => {
         if (!currentProfile) return;
         setEditForm({
