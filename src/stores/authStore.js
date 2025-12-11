@@ -7,7 +7,7 @@ export const useAuthStore = create(
         (set, get) => ({
             user: null,
             profile: null,
-            isLoading: false,
+            isLoading: true, // Start with loading true to show spinner until auth check completes
             isAuthenticated: false,
             error: null,
 
