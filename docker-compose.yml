@@ -17,7 +17,7 @@ services:
       - .:/app
       - /app/node_modules
     ports:
-      - "5173:5173"
+      - "5175:5173"
     environment:
       - VITE_SUPABASE_URL=${VITE_SUPABASE_URL}
       - VITE_SUPABASE_ANON_KEY=${VITE_SUPABASE_ANON_KEY}
