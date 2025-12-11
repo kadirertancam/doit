@@ -1,9 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-    User, Camera, Edit2, Settings, LogOut, Award, Flame, Trophy,
+    Camera, Edit2, Settings, LogOut, Award, Flame, Trophy,
     Target, MapPin, Link as LinkIcon, Instagram, Twitter,
-    X, Check, ChevronRight, Star, Zap, Medal, Crown, Loader, LogIn,
+    X, Check, ChevronRight, Star, Zap, Medal, Crown, LogIn,
     Plus, Trash2, Play, Video
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -27,7 +27,7 @@ const BADGES = [
 
 function Profile() {
     const navigate = useNavigate();
-    const { profile, isAuthenticated, signOut, updateProfile, uploadAvatar, checkAuth, isLoading } = useAuthStore();
+    const { profile, isAuthenticated, signOut, updateProfile, uploadAvatar } = useAuthStore();
     // Use profile from Supabase
     const currentProfile = profile;
 
@@ -61,33 +61,24 @@ function Profile() {
     const earnedBadges = currentProfile ? BADGES.filter(b => b.condition(currentProfile)) : [];
     const lockedBadges = currentProfile ? BADGES.filter(b => !b.condition(currentProfile)) : BADGES;
 
-    // Check auth and fetch videos on mount
+    // Fetch videos on mount
     useEffect(() => {
-        checkAuth();
         fetchVideos();
     }, []);
 
-    // Loading state
-    if (isLoading) {
+    // Not authenticated - show login prompt (same pattern as Challenge.jsx)
+    if (!isAuthenticated) {
         return (
-            <div className="page profile-page">
-                <div className="loading-state">
-                    <Loader size={32} className="spinner" />
-                    <p>Yükleniyor...</p>
-                </div>
-            </div>
-        );
-    }
-
-    // Not authenticated - show login prompt
-    if (!isAuthenticated || !currentProfile) {
-        return (
-            <div className="page profile-page">
+            <motion.div
+                className="page profile-page"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+            >
                 <div className="container">
                     <div className="login-required">
-                        <User size={64} className="login-icon" />
-                        <h2>Giriş Yapın</h2>
-                        <p>Profilinizi görüntülemek için giriş yapmanız gerekiyor.</p>
+                        <LogIn size={64} className="login-icon" />
+                        <h2>Giriş Gerekli</h2>
+                        <p>Profilinizi görüntülemek için giriş yapmalısınız</p>
                         <div className="login-actions">
                             <button className="btn btn-primary" onClick={() => navigate('/login')}>
                                 <LogIn size={18} />
@@ -99,7 +90,7 @@ function Profile() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </motion.div>
         );
     }
 
