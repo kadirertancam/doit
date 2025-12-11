@@ -14,14 +14,19 @@ export const useVideoStore = create((set, get) => ({
 
     // Fetch videos voted by user (with cache)
     fetchUserVotes: async (userId) => {
-        const { lastVotesFetchUserId, userVotedVideoIds, votesLoading } = get();
+        const { lastVotesFetchUserId, votesLoading } = get();
 
-        // Skip if already loading or same user's votes are cached
-        if (votesLoading === false && lastVotesFetchUserId === userId && userVotedVideoIds.length >= 0) {
+        // Skip if already loading
+        if (votesLoading && lastVotesFetchUserId === userId) {
             return;
         }
 
-        set({ votesLoading: true });
+        // Skip if same user's votes are already cached
+        if (lastVotesFetchUserId === userId && !votesLoading) {
+            return;
+        }
+
+        set({ votesLoading: true, lastVotesFetchUserId: userId });
         try {
             const { data, error } = await supabase
                 .from('votes')
@@ -31,10 +36,10 @@ export const useVideoStore = create((set, get) => ({
             if (error) throw error;
 
             const votedIds = data.map(v => v.video_id);
-            set({ userVotedVideoIds: votedIds, votesLoading: false, lastVotesFetchUserId: userId });
+            set({ userVotedVideoIds: votedIds, votesLoading: false });
         } catch (error) {
             console.error('Error fetching user votes:', error);
-            set({ votesLoading: false });
+            set({ votesLoading: false, userVotedVideoIds: [] });
         }
     },
 

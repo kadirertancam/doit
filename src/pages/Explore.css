@@ -607,6 +607,19 @@
     pointer-events: none;
 }
 
+.votes-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xs);
+    padding: var(--space-md);
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-md);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    width: 100%;
+}
+
 /* ============================================
    COMMENTS SECTION
    ============================================ */
