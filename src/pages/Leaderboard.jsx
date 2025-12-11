@@ -150,9 +150,9 @@ function Leaderboard() {
                         <motion.div
                             key={video.id}
                             className="ranking-item"
-                            initial={{ x: -20, opacity: 0 }}
-                            animate={{ x: 0, opacity: 1 }}
-                            transition={{ delay: 0.05 * index }}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.15 }}
                         >
                             <span className="ranking-position">{showPodium ? index + 4 : index + 1}</span>
                             <img

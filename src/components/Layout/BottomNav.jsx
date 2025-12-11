@@ -1,6 +1,6 @@
+import { memo } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Home, Swords, Hash, Trophy, User } from 'lucide-react';
-import { motion } from 'framer-motion';
 import './BottomNav.css';
 
 const navItems = [
@@ -11,39 +11,45 @@ const navItems = [
     { path: '/profile', icon: User, label: 'Profil' },
 ];
 
+// Memoized nav item to prevent re-renders
+const NavItem = memo(function NavItem({ path, Icon, label }) {
+    return (
+        <NavLink
+            key={path}
+            to={path}
+            className={({ isActive }) =>
+                `nav-item ${isActive ? 'nav-item-active' : ''}`
+            }
+        >
+            {({ isActive }) => (
+                <>
+                    {isActive && <div className="nav-indicator" />}
+                    <Icon
+                        size={24}
+                        className={`nav-icon ${isActive ? 'nav-icon-active' : ''}`}
+                    />
+                    <span className="nav-label">{label}</span>
+                </>
+            )}
+        </NavLink>
+    );
+});
+
 function BottomNav() {
     return (
         <nav className="bottom-nav">
             <div className="bottom-nav-inner">
                 {navItems.map((item) => (
-                    <NavLink
+                    <NavItem
                         key={item.path}
-                        to={item.path}
-                        className={({ isActive }) =>
-                            `nav-item ${isActive ? 'nav-item-active' : ''}`
-                        }
-                    >
-                        {({ isActive }) => (
-                            <>
-                                {isActive && (
-                                    <motion.div
-                                        className="nav-indicator"
-                                        layoutId="nav-indicator"
-                                        transition={{ type: 'spring', duration: 0.5 }}
-                                    />
-                                )}
-                                <item.icon
-                                    size={24}
-                                    className={`nav-icon ${isActive ? 'nav-icon-active' : ''}`}
-                                />
-                                <span className="nav-label">{item.label}</span>
-                            </>
-                        )}
-                    </NavLink>
+                        path={item.path}
+                        Icon={item.icon}
+                        label={item.label}
+                    />
                 ))}
             </div>
         </nav>
     );
 }
 
-export default BottomNav;
+export default memo(BottomNav);

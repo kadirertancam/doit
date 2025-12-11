@@ -58,43 +58,42 @@ function Arena() {
         }
     }, [videos, updateVideoCounts]);
 
-    // Initialize arena when videos are loaded or hashtag changes
+    // Initialize arena only once when videos are loaded
     useEffect(() => {
-        if (!isLoading && videos.length > 0) {
-            // Wait for votes to load if user is authenticated
-            if (isAuthenticated && ((userVotedVideoIds.length === 0 && votesLoading))) {
-                return;
-            }
+        // Skip if already initialized or still loading
+        if (initialized || isLoading || videos.length === 0) return;
 
-            // Only initialize if not already initialized
-            // This prevents reset when voting updates the videos list
-            if (!initialized || userVotedVideoIds.length > 0) {
-                let videoList;
-                if (selectedHashtag) {
-                    videoList = getVideosByHashtag(selectedHashtag);
-                } else {
-                    videoList = getAllVideos();
-                }
+        // Wait for votes to load if user is authenticated
+        if (isAuthenticated && votesLoading) return;
 
-                // Filter out voted videos if user is logged in
-                if (isAuthenticated && userVotedVideoIds.length > 0) {
-                    videoList = videoList.filter(v => !userVotedVideoIds.includes(v.id));
-                }
+        let videoList = selectedHashtag ? getVideosByHashtag(selectedHashtag) : getAllVideos();
 
-                if (videoList.length > 0) {
-                    // Only re-initialize if the current list is different or empty
-                    // Simplified: We reset if not initialized or if we need to filter
-                    if (!initialized) {
-                        initializeArena(videoList);
-                        setInitialized(true);
-                    }
-                } else if (isAuthenticated && initialized) {
-                    // If all videos refered out, handle empty state?
-                    // For now, let it be empty or show "No more videos"
-                }
-            }
+        // Filter out voted videos if user is logged in
+        if (isAuthenticated && userVotedVideoIds.length > 0) {
+            videoList = videoList.filter(v => !userVotedVideoIds.includes(v.id));
         }
-    }, [selectedHashtag, isLoading, videos, initialized, userVotedVideoIds, isAuthenticated]);
+
+        if (videoList.length > 0) {
+            initializeArena(videoList);
+            setInitialized(true);
+        }
+    }, [isLoading, votesLoading, initialized]);
+
+    // Re-initialize only when hashtag filter changes
+    useEffect(() => {
+        if (!initialized) return; // Don't run on initial load
+
+        let videoList = selectedHashtag ? getVideosByHashtag(selectedHashtag) : getAllVideos();
+
+        if (isAuthenticated && userVotedVideoIds.length > 0) {
+            videoList = videoList.filter(v => !userVotedVideoIds.includes(v.id));
+        }
+
+        resetArena();
+        if (videoList.length > 0) {
+            initializeArena(videoList);
+        }
+    }, [selectedHashtag]);
 
     const currentVideo = getCurrentVideo();
     const hasNext = currentIndex < arenaVideos.length - 1;

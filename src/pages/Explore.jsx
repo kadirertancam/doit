@@ -300,13 +300,13 @@ function Explore() {
                                     <p>İlk videoyu sen yükle!</p>
                                 </div>
                             ) : (
-                                hashtagVideos.map((video, index) => (
+                                hashtagVideos.map((video) => (
                                     <motion.div
                                         key={video.id}
                                         className="video-card"
-                                        initial={{ opacity: 0, scale: 0.9 }}
-                                        animate={{ opacity: 1, scale: 1 }}
-                                        transition={{ delay: index * 0.05 }}
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        transition={{ duration: 0.15 }}
                                         onClick={() => openVideoDetail(video)}
                                     >
                                         <img src={video.thumbnailUrl} alt={video.displayName} />
@@ -353,17 +353,16 @@ function Explore() {
                         <section className="topics-section">
                             <h3><Grid size={18} /> Tüm Konular</h3>
                             <div className="topics-grid">
-                                {filteredTopics.map((topic, index) => (
+                                {filteredTopics.map((topic) => (
                                     <motion.button
                                         key={topic.id}
                                         className="topic-card"
                                         style={{ '--card-color': topic.color }}
                                         onClick={() => selectHashtag(topic.id)}
-                                        initial={{ opacity: 0, y: 20 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{ delay: index * 0.03 }}
-                                        whileHover={{ scale: 1.05 }}
-                                        whileTap={{ scale: 0.95 }}
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        transition={{ duration: 0.15 }}
+                                        whileTap={{ scale: 0.97 }}
                                     >
                                         <span className="topic-emoji">{topic.emoji}</span>
                                         <span className="topic-tag">{topic.tag}</span>
