@@ -27,7 +27,7 @@ const BADGES = [
 
 function Profile() {
     const navigate = useNavigate();
-    const { profile, isAuthenticated, signOut, updateProfile, uploadAvatar } = useAuthStore();
+    const { profile, isAuthenticated, isLoading, signOut, updateProfile, uploadAvatar } = useAuthStore();
     // Use profile from Supabase
     const currentProfile = profile;
 
@@ -65,6 +65,24 @@ function Profile() {
     useEffect(() => {
         fetchVideos();
     }, []);
+
+    // Loading state - wait for auth check to complete
+    if (isLoading) {
+        return (
+            <motion.div
+                className="page profile-page"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+            >
+                <div className="container">
+                    <div className="loading-state">
+                        <Loader size={32} className="spinner" />
+                        <p>Yükleniyor...</p>
+                    </div>
+                </div>
+            </motion.div>
+        );
+    }
 
     // Not authenticated or no profile - show login prompt
     if (!isAuthenticated || !currentProfile) {
