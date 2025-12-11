@@ -1,9 +1,15 @@
+/* ============================================
+   AUTH PAGES - Professional Mobile
+   ============================================ */
+
 .auth-page {
     min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: var(--space-lg);
+    padding-bottom: calc(var(--space-lg) + var(--safe-area-bottom));
     background: radial-gradient(ellipse at top,
             rgba(139, 92, 246, 0.15) 0%,
             rgba(59, 130, 246, 0.1) 30%,
@@ -12,12 +18,16 @@
 
 .auth-container {
     width: 100%;
-    max-width: 400px;
+    max-width: min(400px, calc(100vw - 2rem));
 }
+
+/* ============================================
+   LOGO SECTION
+   ============================================ */
 
 .auth-logo {
     text-align: center;
-    margin-bottom: var(--space-2xl);
+    margin-bottom: var(--space-xl);
 }
 
 .auth-logo .logo-icon {
@@ -28,7 +38,7 @@
 
 .auth-logo .logo-text {
     font-family: var(--font-display);
-    font-size: 2.5rem;
+    font-size: clamp(2rem, 8vw, 2.5rem);
     font-weight: 800;
     background: var(--accent-gradient);
     -webkit-background-clip: text;
@@ -39,21 +49,29 @@
 
 .auth-logo .logo-subtitle {
     color: var(--text-muted);
-    font-size: 0.9rem;
+    font-size: clamp(0.8rem, 3vw, 0.9rem);
 }
+
+/* ============================================
+   AUTH FORM
+   ============================================ */
 
 .auth-form {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
-    padding: var(--space-xl);
+    padding: var(--space-lg);
 }
 
 .auth-form h2 {
     text-align: center;
     margin-bottom: var(--space-lg);
-    font-size: 1.5rem;
+    font-size: clamp(1.25rem, 4vw, 1.5rem);
 }
+
+/* ============================================
+   ERROR MESSAGE
+   ============================================ */
 
 .auth-error {
     padding: var(--space-md);
@@ -64,7 +82,18 @@
     font-size: 0.85rem;
     margin-bottom: var(--space-md);
     text-align: center;
+    animation: shake 0.5s ease-in-out;
 }
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+/* ============================================
+   INPUT GROUP
+   ============================================ */
 
 .input-group {
     position: relative;
@@ -77,17 +106,19 @@
     top: 50%;
     transform: translateY(-50%);
     color: var(--text-muted);
+    pointer-events: none;
 }
 
 .auth-input {
     width: 100%;
-    padding: var(--space-md) var(--space-md) var(--space-md) calc(var(--space-md) * 2 + 18px);
+    padding: var(--space-md) var(--space-md) var(--space-md) calc(var(--space-md) * 2 + 20px);
+    min-height: var(--touch-target);
     background: var(--bg-tertiary);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
     color: var(--text-primary);
-    font-size: 1rem;
-    transition: all 0.3s ease;
+    font-size: 16px; /* Prevent iOS zoom */
+    transition: all 0.2s ease;
 }
 
 .auth-input:focus {
@@ -96,6 +127,11 @@
     box-shadow: 0 0 15px rgba(139, 92, 246, 0.2);
 }
 
+.auth-input::placeholder {
+    color: var(--text-muted);
+}
+
+/* Password toggle button */
 .password-toggle {
     position: absolute;
     right: var(--space-md);
@@ -105,22 +141,37 @@
     border: none;
     color: var(--text-muted);
     cursor: pointer;
-    padding: 0;
+    padding: var(--space-xs);
+    min-width: var(--touch-target);
+    min-height: var(--touch-target);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    touch-action: manipulation;
 }
 
-.password-toggle:hover {
+.password-toggle:active {
     color: var(--text-primary);
 }
+
+/* ============================================
+   SUBMIT BUTTON
+   ============================================ */
 
 .auth-submit {
     width: 100%;
     margin-top: var(--space-md);
+    min-height: 52px;
 }
 
 .auth-submit:disabled {
     opacity: 0.6;
     cursor: not-allowed;
 }
+
+/* ============================================
+   AUTH LINK
+   ============================================ */
 
 .auth-link {
     text-align: center;
@@ -133,13 +184,18 @@
     color: var(--accent-primary);
     text-decoration: none;
     font-weight: 600;
+    padding: var(--space-xs);
 }
 
-.auth-link a:hover {
+.auth-link a:active {
     text-decoration: underline;
 }
 
-/* Login Required Screen (used in Profile, Challenge) */
+/* ============================================
+   LOGIN REQUIRED SCREEN
+   (used in Profile, Challenge pages)
+   ============================================ */
+
 .login-required {
     display: flex;
     flex-direction: column;
@@ -157,7 +213,7 @@
 }
 
 .login-required h2 {
-    font-size: 1.5rem;
+    font-size: clamp(1.25rem, 4vw, 1.5rem);
     color: var(--text-primary);
     margin: 0;
 }
@@ -165,9 +221,93 @@
 .login-required p {
     color: var(--text-muted);
     margin: 0;
+    max-width: 280px;
 }
 
 .login-required .login-actions {
     display: flex;
     gap: var(--space-md);
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+
+/* Small phones */
+@media (max-width: 359px) {
+    .auth-page {
+        padding: var(--space-md);
+    }
+
+    .auth-form {
+        padding: var(--space-md);
+    }
+
+    .auth-logo .logo-icon {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+/* Medium phones */
+@media (min-width: 375px) {
+    .auth-form {
+        padding: var(--space-xl);
+    }
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+    .auth-container {
+        max-width: 450px;
+    }
+
+    .auth-form {
+        padding: var(--space-2xl);
+    }
+}
+
+/* ============================================
+   LANDSCAPE MODE
+   ============================================ */
+
+@media (orientation: landscape) and (max-height: 500px) {
+    .auth-page {
+        padding: var(--space-md);
+        align-items: flex-start;
+        padding-top: var(--space-lg);
+    }
+
+    .auth-logo {
+        margin-bottom: var(--space-md);
+    }
+
+    .auth-logo .logo-icon {
+        display: none;
+    }
+
+    .auth-logo .logo-text {
+        font-size: 1.75rem;
+    }
+
+    .auth-form {
+        padding: var(--space-md);
+    }
+
+    .input-group {
+        margin-bottom: var(--space-sm);
+    }
+}
+
+/* ============================================
+   KEYBOARD VISIBLE (Mobile Safari fix)
+   ============================================ */
+
+@supports (-webkit-touch-callout: none) {
+    /* iOS-specific - adjust for keyboard */
+    .auth-page {
+        min-height: -webkit-fill-available;
+    }
 }

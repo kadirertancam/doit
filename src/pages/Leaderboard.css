@@ -1,12 +1,20 @@
+/* ============================================
+   LEADERBOARD PAGE - Professional Mobile
+   ============================================ */
+
 .leaderboard-page {
     background: radial-gradient(ellipse at top,
             rgba(251, 191, 36, 0.1) 0%,
             var(--bg-primary) 50%);
 }
 
+/* ============================================
+   HEADER
+   ============================================ */
+
 .leaderboard-header {
     text-align: center;
-    padding: var(--space-lg) 0;
+    padding: var(--space-md) 0 var(--space-lg);
 }
 
 .header-title {
@@ -24,7 +32,7 @@
 
 .leaderboard-header h1 {
     font-family: var(--font-display);
-    font-size: 1.75rem;
+    font-size: clamp(1.5rem, 5vw, 1.75rem);
     background: linear-gradient(135deg, #fbbf24, #f59e0b);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -33,10 +41,13 @@
 
 .header-subtitle {
     color: var(--text-muted);
-    font-size: 0.9rem;
+    font-size: clamp(0.8rem, 2.5vw, 0.9rem);
 }
 
-/* Tabs */
+/* ============================================
+   TABS
+   ============================================ */
+
 .tab-container {
     display: flex;
     gap: var(--space-xs);
@@ -49,14 +60,20 @@
 .tab-btn {
     flex: 1;
     padding: var(--space-sm) var(--space-md);
+    min-height: var(--touch-target);
     background: transparent;
     border: none;
     border-radius: var(--radius-full);
     color: var(--text-muted);
-    font-size: 0.85rem;
+    font-size: clamp(0.75rem, 2.5vw, 0.85rem);
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
+    touch-action: manipulation;
+}
+
+.tab-btn:active {
+    background: rgba(139, 92, 246, 0.1);
 }
 
 .tab-btn.active {
@@ -65,7 +82,10 @@
     box-shadow: var(--accent-glow);
 }
 
-/* Hashtag Filter */
+/* ============================================
+   HASHTAG FILTER
+   ============================================ */
+
 .hashtag-filter-scroll {
     display: flex;
     gap: var(--space-sm);
@@ -73,6 +93,7 @@
     padding-bottom: var(--space-sm);
     margin-bottom: var(--space-md);
     scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
 }
 
 .hashtag-filter-scroll::-webkit-scrollbar {
@@ -82,17 +103,21 @@
 .filter-chip {
     flex-shrink: 0;
     padding: var(--space-xs) var(--space-md);
+    min-height: 36px;
     background: var(--bg-tertiary);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-full);
     color: var(--text-secondary);
     font-size: 0.75rem;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     white-space: nowrap;
+    display: flex;
+    align-items: center;
+    touch-action: manipulation;
 }
 
-.filter-chip:hover,
+.filter-chip:active,
 .filter-chip.active {
     border-color: var(--accent-primary);
     color: var(--text-primary);
@@ -108,18 +133,23 @@
     background: rgba(139, 92, 246, 0.1);
     border: 1px solid var(--accent-primary);
     border-radius: var(--radius-md);
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     color: var(--accent-primary);
     margin-bottom: var(--space-md);
+    flex-wrap: wrap;
+    text-align: center;
 }
 
-/* Podium */
+/* ============================================
+   PODIUM
+   ============================================ */
+
 .podium {
     display: flex;
     align-items: flex-end;
     justify-content: center;
     gap: var(--space-md);
-    padding: var(--space-xl) 0;
+    padding: var(--space-lg) 0;
     margin-bottom: var(--space-lg);
 }
 
@@ -128,10 +158,13 @@
     flex-direction: column;
     align-items: center;
     gap: var(--space-sm);
+    flex: 1;
+    max-width: 100px;
 }
 
 .podium-item.first {
     order: 2;
+    max-width: 120px;
 }
 
 .podium-item.second {
@@ -149,15 +182,8 @@
 }
 
 @keyframes float {
-
-    0%,
-    100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-5px);
-    }
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
 }
 
 .podium-avatar-wrapper {
@@ -165,16 +191,16 @@
 }
 
 .podium-avatar {
-    width: 70px;
-    height: 70px;
+    width: clamp(55px, 15vw, 70px);
+    height: clamp(55px, 15vw, 70px);
     border-radius: var(--radius-full);
     object-fit: cover;
     border: 3px solid var(--border-color);
 }
 
 .podium-item.first .podium-avatar {
-    width: 90px;
-    height: 90px;
+    width: clamp(70px, 20vw, 90px);
+    height: clamp(70px, 20vw, 90px);
     border-color: #fbbf24;
     box-shadow: 0 0 30px rgba(251, 191, 36, 0.4);
 }
@@ -193,14 +219,14 @@
     position: absolute;
     bottom: -5px;
     right: -5px;
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: var(--radius-full);
     font-weight: 800;
-    font-size: 0.85rem;
+    font-size: 0.75rem;
 }
 
 .podium-badge.gold {
@@ -219,19 +245,27 @@
 }
 
 .podium-name {
-    font-size: 0.85rem;
+    font-size: clamp(0.7rem, 2.5vw, 0.85rem);
     font-weight: 600;
     color: var(--text-primary);
+    text-align: center;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .podium-score {
     font-family: var(--font-display);
-    font-size: 1.1rem;
+    font-size: clamp(0.9rem, 3vw, 1.1rem);
     font-weight: 700;
     color: var(--accent-primary);
 }
 
-/* Rankings List */
+/* ============================================
+   RANKINGS LIST
+   ============================================ */
+
 .rankings-list {
     display: flex;
     flex-direction: column;
@@ -243,27 +277,37 @@
     align-items: center;
     gap: var(--space-md);
     padding: var(--space-md);
+    min-height: var(--touch-target);
     background: var(--bg-card);
     border-radius: var(--radius-md);
     border: 1px solid var(--border-color);
+    touch-action: manipulation;
+}
+
+.ranking-item:active {
+    background: var(--bg-glass);
 }
 
 .ranking-position {
-    width: 28px;
+    width: 24px;
     text-align: center;
     font-weight: 700;
+    font-size: 0.9rem;
     color: var(--text-muted);
+    flex-shrink: 0;
 }
 
 .ranking-avatar {
-    width: 44px;
-    height: 44px;
+    width: 40px;
+    height: 40px;
     border-radius: var(--radius-sm);
     object-fit: cover;
+    flex-shrink: 0;
 }
 
 .ranking-info {
     flex: 1;
+    min-width: 0;
 }
 
 .ranking-name {
@@ -271,18 +315,23 @@
     color: var(--text-primary);
     display: block;
     margin-bottom: 2px;
+    font-size: 0.9rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .ranking-stats {
     display: flex;
     gap: var(--space-md);
+    flex-wrap: wrap;
 }
 
 .ranking-stats span {
     display: flex;
     align-items: center;
     gap: 4px;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     color: var(--text-muted);
 }
 
@@ -293,9 +342,14 @@
     font-family: var(--font-display);
     font-weight: 700;
     color: var(--accent-primary);
+    font-size: 0.95rem;
+    flex-shrink: 0;
 }
 
-/* Empty State */
+/* ============================================
+   EMPTY STATE
+   ============================================ */
+
 .empty-state {
     display: flex;
     flex-direction: column;
@@ -314,8 +368,116 @@
 .empty-state h3 {
     color: var(--text-primary);
     margin-bottom: var(--space-sm);
+    font-size: 1rem;
 }
 
 .empty-state p {
     color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+
+/* Small phones */
+@media (max-width: 359px) {
+    .podium {
+        gap: var(--space-sm);
+    }
+
+    .podium-item {
+        max-width: 80px;
+    }
+
+    .podium-item.first {
+        max-width: 100px;
+    }
+
+    .ranking-stats {
+        gap: var(--space-sm);
+    }
+
+    .ranking-stats span {
+        font-size: 0.65rem;
+    }
+
+    .ranking-avatar {
+        width: 36px;
+        height: 36px;
+    }
+}
+
+/* Medium phones */
+@media (min-width: 375px) {
+    .podium-badge {
+        width: 28px;
+        height: 28px;
+        font-size: 0.85rem;
+    }
+}
+
+/* Larger phones */
+@media (min-width: 414px) {
+    .podium {
+        gap: var(--space-lg);
+    }
+
+    .ranking-item {
+        padding: var(--space-md) var(--space-lg);
+    }
+
+    .ranking-avatar {
+        width: 44px;
+        height: 44px;
+    }
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+    .podium-item {
+        max-width: 130px;
+    }
+
+    .podium-item.first {
+        max-width: 150px;
+    }
+
+    .rankings-list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ============================================
+   LANDSCAPE MODE
+   ============================================ */
+
+@media (orientation: landscape) and (max-height: 500px) {
+    .leaderboard-header {
+        padding: var(--space-sm) 0;
+    }
+
+    .header-subtitle {
+        display: none;
+    }
+
+    .podium {
+        padding: var(--space-md) 0;
+        margin-bottom: var(--space-md);
+    }
+
+    .crown {
+        display: none;
+    }
+
+    .podium-avatar {
+        width: 50px;
+        height: 50px;
+    }
+
+    .podium-item.first .podium-avatar {
+        width: 60px;
+        height: 60px;
+    }
 }
