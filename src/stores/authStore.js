@@ -7,8 +7,9 @@ export const useAuthStore = create(
         (set, get) => ({
             user: null,
             profile: null,
-            isLoading: true, // Start with loading true to show spinner until auth check completes
+            isLoading: false,
             isAuthenticated: false,
+            authInitialized: false, // Flag to track if initial auth check is done
             error: null,
 
             // Check current session
@@ -28,7 +29,7 @@ export const useAuthStore = create(
                     // On error, clear auth state for safety
                     set({ user: null, profile: null, isAuthenticated: false });
                 } finally {
-                    set({ isLoading: false });
+                    set({ isLoading: false, authInitialized: true });
                 }
             },
 

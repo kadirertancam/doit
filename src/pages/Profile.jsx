@@ -27,7 +27,7 @@ const BADGES = [
 
 function Profile() {
     const navigate = useNavigate();
-    const { profile, isAuthenticated, isLoading, signOut, updateProfile, uploadAvatar } = useAuthStore();
+    const { profile, isAuthenticated, isLoading, authInitialized, signOut, updateProfile, uploadAvatar } = useAuthStore();
     // Use profile from Supabase
     const currentProfile = profile;
 
@@ -67,7 +67,7 @@ function Profile() {
     }, []);
 
     // Loading state - wait for auth check to complete
-    if (isLoading) {
+    if (!authInitialized || isLoading) {
         return (
             <motion.div
                 className="page profile-page"
