@@ -13,14 +13,22 @@ export const useAuthStore = create(
 
             // Check current session
             checkAuth: async () => {
+                set({ isLoading: true });
                 try {
                     const { data: { session } } = await supabase.auth.getSession();
                     if (session?.user) {
                         set({ user: session.user, isAuthenticated: true });
                         await get().fetchProfile(session.user.id);
+                    } else {
+                        // No valid session - clear auth state
+                        set({ user: null, profile: null, isAuthenticated: false });
                     }
                 } catch (error) {
                     console.error('Auth check failed:', error);
+                    // On error, clear auth state for safety
+                    set({ user: null, profile: null, isAuthenticated: false });
+                } finally {
+                    set({ isLoading: false });
                 }
             },
 
