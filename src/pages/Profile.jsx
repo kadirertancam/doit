@@ -4,7 +4,7 @@ import {
     Camera, Edit2, Settings, LogOut, Award, Flame, Trophy,
     Target, MapPin, Link as LinkIcon, Instagram, Twitter,
     X, Check, ChevronRight, Star, Zap, Medal, Crown, LogIn,
-    Plus, Trash2, Play, Video, Loader
+    Plus, Trash2, Play, Video
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../stores/authStore';
@@ -27,7 +27,7 @@ const BADGES = [
 
 function Profile() {
     const navigate = useNavigate();
-    const { profile, isAuthenticated, isLoading, authInitialized, signOut, updateProfile, uploadAvatar } = useAuthStore();
+    const { profile, isAuthenticated, signOut, updateProfile, uploadAvatar } = useAuthStore();
     // Use profile from Supabase
     const currentProfile = profile;
 
@@ -66,26 +66,8 @@ function Profile() {
         fetchVideos();
     }, []);
 
-    // Loading state - wait for auth check to complete
-    if (!authInitialized || isLoading) {
-        return (
-            <motion.div
-                className="page profile-page"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-            >
-                <div className="container">
-                    <div className="loading-state">
-                        <Loader size={32} className="spinner" />
-                        <p>Yükleniyor...</p>
-                    </div>
-                </div>
-            </motion.div>
-        );
-    }
-
-    // Not authenticated or no profile - show login prompt
-    if (!isAuthenticated || !currentProfile) {
+    // Not authenticated - show login prompt (same as Challenge.jsx)
+    if (!isAuthenticated) {
         return (
             <motion.div
                 className="page profile-page"
@@ -106,6 +88,23 @@ function Profile() {
                                 Kayıt Ol
                             </button>
                         </div>
+                    </div>
+                </div>
+            </motion.div>
+        );
+    }
+
+    // Profile not loaded yet
+    if (!currentProfile) {
+        return (
+            <motion.div
+                className="page profile-page"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+            >
+                <div className="container">
+                    <div className="loading-state">
+                        <p>Profil yükleniyor...</p>
                     </div>
                 </div>
             </motion.div>
