@@ -1,3 +1,7 @@
+/* ============================================
+   CHALLENGE PAGE - Professional Mobile
+   ============================================ */
+
 .challenge-page {
     background: radial-gradient(ellipse at top,
             rgba(59, 130, 246, 0.08) 0%,
@@ -5,12 +9,16 @@
             var(--bg-primary) 60%);
 }
 
+/* ============================================
+   HEADER
+   ============================================ */
+
 .challenge-header {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: var(--space-md);
-    padding: var(--space-lg) 0;
+    padding: var(--space-md) 0 var(--space-lg);
     text-align: center;
 }
 
@@ -18,14 +26,18 @@
     display: flex;
     align-items: center;
     gap: var(--space-sm);
-    font-size: 1.5rem;
+    font-size: clamp(1.25rem, 4vw, 1.5rem);
 }
 
 .challenge-header h1 svg {
     color: var(--accent-primary);
+    flex-shrink: 0;
 }
 
-/* Success Message */
+/* ============================================
+   SUCCESS MESSAGE
+   ============================================ */
+
 .success-message {
     display: flex;
     align-items: center;
@@ -37,10 +49,26 @@
     border-radius: var(--radius-md);
     color: var(--success);
     font-weight: 600;
+    font-size: 0.9rem;
     margin-bottom: var(--space-lg);
+    animation: slide-down 0.3s ease-out;
 }
 
-/* Hashtag Selection */
+@keyframes slide-down {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================
+   HASHTAG SELECTION
+   ============================================ */
+
 .hashtag-selection {
     margin-bottom: var(--space-lg);
 }
@@ -50,6 +78,7 @@
     font-weight: 600;
     margin-bottom: var(--space-sm);
     color: var(--text-primary);
+    font-size: 0.9rem;
 }
 
 .hashtag-picker-btn {
@@ -58,20 +87,24 @@
     gap: var(--space-md);
     width: 100%;
     padding: var(--space-md);
+    min-height: var(--touch-target);
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
     color: var(--text-primary);
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
+    touch-action: manipulation;
 }
 
-.hashtag-picker-btn:hover {
+.hashtag-picker-btn:active {
+    transform: scale(0.99);
     border-color: var(--accent-primary);
 }
 
 .hashtag-picker-btn .selected-emoji {
     font-size: 1.5rem;
+    flex-shrink: 0;
 }
 
 .hashtag-picker-btn .selected-tag {
@@ -79,25 +112,33 @@
     text-align: left;
     font-weight: 600;
     font-size: 1rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .hashtag-picker-btn svg {
     color: var(--text-muted);
-    transition: transform 0.3s ease;
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
 }
 
 .hashtag-picker-btn svg.rotated {
     transform: rotate(180deg);
 }
 
-/* Hashtag Picker Dropdown */
+/* ============================================
+   HASHTAG PICKER DROPDOWN
+   ============================================ */
+
 .hashtag-picker-dropdown {
     margin-top: var(--space-sm);
-    max-height: 250px;
+    max-height: 220px;
     overflow-y: auto;
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
+    -webkit-overflow-scrolling: touch;
 }
 
 .hashtag-option {
@@ -106,19 +147,21 @@
     gap: var(--space-md);
     width: 100%;
     padding: var(--space-md);
+    min-height: var(--touch-target);
     background: transparent;
     border: none;
     border-bottom: 1px solid var(--border-color);
     color: var(--text-primary);
     cursor: pointer;
     transition: all 0.2s ease;
+    touch-action: manipulation;
 }
 
 .hashtag-option:last-child {
     border-bottom: none;
 }
 
-.hashtag-option:hover,
+.hashtag-option:active,
 .hashtag-option.selected {
     background: rgba(139, 92, 246, 0.1);
 }
@@ -129,19 +172,27 @@
 
 .option-emoji {
     font-size: 1.25rem;
+    flex-shrink: 0;
 }
 
 .option-tag {
     flex: 1;
     text-align: left;
     font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .hashtag-option svg {
     color: var(--accent-primary);
+    flex-shrink: 0;
 }
 
-/* Upload Section */
+/* ============================================
+   UPLOAD SECTION
+   ============================================ */
+
 .upload-section {
     margin-bottom: var(--space-lg);
 }
@@ -151,15 +202,16 @@
     align-items: center;
     justify-content: center;
     aspect-ratio: 9/16;
-    max-height: 400px;
+    max-height: min(400px, 60vh);
     background: var(--bg-card);
     border: 2px dashed var(--border-color);
     border-radius: var(--radius-lg);
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
+    touch-action: manipulation;
 }
 
-.upload-area:hover {
+.upload-area:active {
     border-color: var(--accent-primary);
     background: rgba(139, 92, 246, 0.05);
 }
@@ -170,7 +222,7 @@
     align-items: center;
     gap: var(--space-sm);
     text-align: center;
-    padding: var(--space-xl);
+    padding: var(--space-lg);
 }
 
 .upload-icon {
@@ -180,26 +232,29 @@
 }
 
 .upload-content h3 {
-    font-size: 1.2rem;
+    font-size: clamp(1rem, 3vw, 1.2rem);
     color: var(--text-primary);
 }
 
 .upload-content p {
     color: var(--text-muted);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
 }
 
 .upload-hint {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     color: var(--text-muted);
     opacity: 0.7;
 }
 
-/* Video Preview */
+/* ============================================
+   VIDEO PREVIEW
+   ============================================ */
+
 .video-preview {
     position: relative;
     aspect-ratio: 9/16;
-    max-height: 400px;
+    max-height: min(400px, 60vh);
     border-radius: var(--radius-lg);
     overflow: hidden;
     background: var(--bg-tertiary);
@@ -216,23 +271,36 @@
     top: var(--space-md);
     right: var(--space-md);
     padding: var(--space-sm);
-    background: rgba(0, 0, 0, 0.6);
+    width: 40px;
+    height: 40px;
+    min-width: var(--touch-target);
+    min-height: var(--touch-target);
+    background: rgba(0, 0, 0, 0.7);
     border: none;
-    border-radius: 50%;
+    border-radius: var(--radius-full);
     color: white;
     cursor: pointer;
     transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    touch-action: manipulation;
 }
 
-.cancel-btn:hover {
+.cancel-btn:active {
     background: rgba(239, 68, 68, 0.8);
+    transform: scale(0.95);
 }
 
-/* Submit Button */
+/* ============================================
+   SUBMIT BUTTON
+   ============================================ */
+
 .submit-btn {
     width: 100%;
     padding: var(--space-md) var(--space-xl);
     font-size: 1rem;
+    min-height: 52px;
 }
 
 .submit-btn:disabled {
@@ -245,19 +313,17 @@
 }
 
 @keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
-/* Tips Section */
+/* ============================================
+   TIPS SECTION
+   ============================================ */
+
 .tips-section {
     margin-top: var(--space-xl);
-    padding: var(--space-lg);
+    padding: var(--space-md);
     background: var(--bg-card);
     border-radius: var(--radius-lg);
     border: 1px solid var(--border-color);
@@ -266,6 +332,7 @@
 .tips-section h4 {
     margin-bottom: var(--space-md);
     color: var(--text-primary);
+    font-size: 0.95rem;
 }
 
 .tips-section ul {
@@ -279,7 +346,8 @@
     padding-left: var(--space-lg);
     margin-bottom: var(--space-sm);
     color: var(--text-secondary);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    line-height: 1.4;
 }
 
 .tips-section li::before {
@@ -288,7 +356,10 @@
     left: 0;
 }
 
-/* Login Required */
+/* ============================================
+   LOGIN REQUIRED
+   ============================================ */
+
 .login-required {
     display: flex;
     flex-direction: column;
@@ -306,7 +377,7 @@
 }
 
 .login-required h2 {
-    font-size: 1.5rem;
+    font-size: clamp(1.25rem, 4vw, 1.5rem);
     color: var(--text-primary);
     margin: 0;
 }
@@ -319,4 +390,77 @@
 .login-actions {
     display: flex;
     gap: var(--space-md);
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+
+/* Small phones */
+@media (max-width: 359px) {
+    .upload-area {
+        max-height: 350px;
+    }
+
+    .video-preview {
+        max-height: 350px;
+    }
+
+    .upload-content {
+        padding: var(--space-md);
+    }
+
+    .tips-section li {
+        font-size: 0.8rem;
+    }
+}
+
+/* Larger phones */
+@media (min-width: 414px) {
+    .upload-area {
+        max-height: 450px;
+    }
+
+    .video-preview {
+        max-height: 450px;
+    }
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+    .upload-area,
+    .video-preview {
+        max-height: 500px;
+        max-width: 350px;
+        margin: 0 auto;
+    }
+
+    .tips-section {
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+/* ============================================
+   LANDSCAPE MODE
+   ============================================ */
+
+@media (orientation: landscape) and (max-height: 500px) {
+    .challenge-header {
+        padding: var(--space-sm) 0;
+    }
+
+    .upload-area,
+    .video-preview {
+        max-height: 55vh;
+        aspect-ratio: auto;
+        height: 55vh;
+    }
+
+    .tips-section {
+        display: none;
+    }
 }

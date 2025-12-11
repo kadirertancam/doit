@@ -1,12 +1,19 @@
+/* ============================================
+   ARENA CARD - Professional Mobile
+   ============================================ */
+
 .arena-card-wrapper {
     position: relative;
     width: 100%;
-    max-width: 350px;
+    max-width: min(320px, calc(100vw - 2rem));
     margin: 0 auto;
     aspect-ratio: 9/16;
 }
 
-/* Vote Indicators */
+/* ============================================
+   VOTE INDICATORS
+   ============================================ */
+
 .vote-indicator {
     position: absolute;
     left: 50%;
@@ -15,43 +22,46 @@
     flex-direction: column;
     align-items: center;
     gap: var(--space-sm);
-    padding: var(--space-md) var(--space-xl);
+    padding: var(--space-md) var(--space-lg);
     border-radius: var(--radius-lg);
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     z-index: 10;
     pointer-events: none;
 }
 
 .upvote-indicator {
-    top: -60px;
+    top: -55px;
     background: rgba(34, 197, 94, 0.2);
     color: var(--success);
     border: 2px solid var(--success);
-    box-shadow: 0 0 30px rgba(34, 197, 94, 0.5);
+    box-shadow: 0 0 25px rgba(34, 197, 94, 0.5);
 }
 
 .downvote-indicator {
-    bottom: -60px;
+    bottom: -55px;
     background: rgba(239, 68, 68, 0.2);
     color: var(--error);
     border: 2px solid var(--error);
-    box-shadow: 0 0 30px rgba(239, 68, 68, 0.5);
+    box-shadow: 0 0 25px rgba(239, 68, 68, 0.5);
 }
 
-/* Navigation Indicators */
+/* ============================================
+   NAVIGATION INDICATORS (Hidden on mobile)
+   ============================================ */
+
 .nav-indicator {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
     gap: var(--space-xs);
     padding: var(--space-md);
     border-radius: var(--radius-md);
     font-weight: 500;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     z-index: 10;
     pointer-events: none;
     background: var(--bg-glass);
@@ -59,16 +69,19 @@
 }
 
 .prev-indicator {
-    left: -70px;
+    left: -65px;
     color: var(--text-secondary);
 }
 
 .next-indicator {
-    right: -70px;
+    right: -65px;
     color: var(--text-secondary);
 }
 
-/* Main Card */
+/* ============================================
+   MAIN CARD
+   ============================================ */
+
 .arena-video-card {
     position: relative;
     width: 100%;
@@ -79,18 +92,26 @@
     box-shadow: var(--shadow-lg);
     background: var(--bg-tertiary);
     touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 .arena-video-card:active {
     cursor: grabbing;
 }
 
-.arena-video-thumbnail {
+/* ============================================
+   VIDEO CONTENT
+   ============================================ */
+
+.arena-video-thumbnail,
+.arena-video-player {
     width: 100%;
     height: 100%;
     object-fit: cover;
     user-select: none;
     pointer-events: none;
+    -webkit-user-drag: none;
 }
 
 .arena-video-overlay {
@@ -98,8 +119,9 @@
     bottom: 0;
     left: 0;
     right: 0;
-    padding: var(--space-xl) var(--space-lg);
+    padding: var(--space-xl) var(--space-md) var(--space-lg);
     background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+    pointer-events: none;
 }
 
 .video-user-info {
@@ -109,15 +131,19 @@
 }
 
 .video-username {
-    font-size: 1.1rem;
+    font-size: clamp(0.95rem, 3vw, 1.1rem);
     font-weight: 700;
     color: var(--text-primary);
 }
 
 .video-votes {
-    font-size: 0.85rem;
+    font-size: clamp(0.75rem, 2.5vw, 0.85rem);
     color: var(--text-secondary);
 }
+
+/* ============================================
+   SWIPE INSTRUCTIONS
+   ============================================ */
 
 .swipe-instructions {
     position: absolute;
@@ -125,22 +151,27 @@
     left: 50%;
     transform: translateX(-50%);
     display: flex;
-    gap: var(--space-lg);
+    gap: var(--space-md);
     padding: var(--space-sm) var(--space-md);
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(8px);
     border-radius: var(--radius-full);
+    pointer-events: none;
 }
 
 .instruction {
     display: flex;
     align-items: center;
     gap: var(--space-xs);
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     color: var(--text-muted);
+    white-space: nowrap;
 }
 
-/* Vote Animation */
+/* ============================================
+   VOTE ANIMATION
+   ============================================ */
+
 .vote-animation {
     position: absolute;
     inset: 0;
@@ -165,8 +196,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 120px;
-    height: 120px;
+    width: 100px;
+    height: 100px;
     border-radius: var(--radius-full);
 }
 
@@ -174,10 +205,10 @@
     color: var(--success);
     background: rgba(34, 197, 94, 0.2);
     box-shadow:
-        0 0 40px rgba(34, 197, 94, 0.6),
-        0 0 80px rgba(34, 197, 94, 0.4),
-        0 0 120px rgba(34, 197, 94, 0.2),
-        inset 0 0 30px rgba(34, 197, 94, 0.3);
+        0 0 35px rgba(34, 197, 94, 0.6),
+        0 0 70px rgba(34, 197, 94, 0.4),
+        0 0 100px rgba(34, 197, 94, 0.2),
+        inset 0 0 25px rgba(34, 197, 94, 0.3);
     animation: glow-pulse-green 0.6s ease-out;
 }
 
@@ -185,16 +216,16 @@
     color: var(--error);
     background: rgba(239, 68, 68, 0.2);
     box-shadow:
-        0 0 40px rgba(239, 68, 68, 0.6),
-        0 0 80px rgba(239, 68, 68, 0.4),
-        0 0 120px rgba(239, 68, 68, 0.2),
-        inset 0 0 30px rgba(239, 68, 68, 0.3);
+        0 0 35px rgba(239, 68, 68, 0.6),
+        0 0 70px rgba(239, 68, 68, 0.4),
+        0 0 100px rgba(239, 68, 68, 0.2),
+        inset 0 0 25px rgba(239, 68, 68, 0.3);
     animation: glow-pulse-red 0.6s ease-out;
 }
 
 .vote-text {
     font-family: var(--font-display);
-    font-size: 1.5rem;
+    font-size: clamp(1.1rem, 4vw, 1.5rem);
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -212,53 +243,38 @@
 
 @keyframes glow-pulse-green {
     0% {
-        box-shadow:
-            0 0 20px rgba(34, 197, 94, 0.4),
-            0 0 40px rgba(34, 197, 94, 0.2);
+        box-shadow: 0 0 20px rgba(34, 197, 94, 0.4), 0 0 40px rgba(34, 197, 94, 0.2);
     }
-
     50% {
-        box-shadow:
-            0 0 60px rgba(34, 197, 94, 0.8),
-            0 0 100px rgba(34, 197, 94, 0.5),
-            0 0 140px rgba(34, 197, 94, 0.3);
+        box-shadow: 0 0 50px rgba(34, 197, 94, 0.8), 0 0 90px rgba(34, 197, 94, 0.5), 0 0 120px rgba(34, 197, 94, 0.3);
     }
-
     100% {
-        box-shadow:
-            0 0 40px rgba(34, 197, 94, 0.6),
-            0 0 80px rgba(34, 197, 94, 0.4);
+        box-shadow: 0 0 35px rgba(34, 197, 94, 0.6), 0 0 70px rgba(34, 197, 94, 0.4);
     }
 }
 
 @keyframes glow-pulse-red {
     0% {
-        box-shadow:
-            0 0 20px rgba(239, 68, 68, 0.4),
-            0 0 40px rgba(239, 68, 68, 0.2);
+        box-shadow: 0 0 20px rgba(239, 68, 68, 0.4), 0 0 40px rgba(239, 68, 68, 0.2);
     }
-
     50% {
-        box-shadow:
-            0 0 60px rgba(239, 68, 68, 0.8),
-            0 0 100px rgba(239, 68, 68, 0.5),
-            0 0 140px rgba(239, 68, 68, 0.3);
+        box-shadow: 0 0 50px rgba(239, 68, 68, 0.8), 0 0 90px rgba(239, 68, 68, 0.5), 0 0 120px rgba(239, 68, 68, 0.3);
     }
-
     100% {
-        box-shadow:
-            0 0 40px rgba(239, 68, 68, 0.6),
-            0 0 80px rgba(239, 68, 68, 0.4);
+        box-shadow: 0 0 35px rgba(239, 68, 68, 0.6), 0 0 70px rgba(239, 68, 68, 0.4);
     }
 }
 
-/* Empty State */
+/* ============================================
+   EMPTY STATE
+   ============================================ */
+
 .arena-empty {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: var(--space-2xl);
+    padding: var(--space-xl);
     text-align: center;
     aspect-ratio: 9/16;
     background: var(--bg-card);
@@ -268,31 +284,28 @@
 
 .empty-icon {
     color: var(--accent-primary);
-    margin-bottom: var(--space-lg);
+    margin-bottom: var(--space-md);
     opacity: 0.5;
 }
 
 .arena-empty h3 {
     margin-bottom: var(--space-sm);
     color: var(--text-primary);
+    font-size: 1rem;
 }
 
-/* Video Player */
-.arena-video-player {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    pointer-events: none;
-    /* Prevent video controls overlap with swipe */
-}
+/* ============================================
+   MUTE BUTTON
+   ============================================ */
 
 .mute-btn {
     position: absolute;
-    bottom: 120px;
-    /* Above user info */
+    bottom: 100px;
     right: var(--space-md);
     width: 40px;
     height: 40px;
+    min-width: var(--touch-target);
+    min-height: var(--touch-target);
     border-radius: var(--radius-full);
     background: rgba(0, 0, 0, 0.6);
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -304,9 +317,130 @@
     z-index: 20;
     transition: all 0.2s ease;
     backdrop-filter: blur(4px);
+    touch-action: manipulation;
 }
 
-.mute-btn:hover {
+.mute-btn:active {
+    transform: scale(0.95);
     background: rgba(0, 0, 0, 0.8);
-    transform: scale(1.1);
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+
+/* Small phones */
+@media (max-width: 359px) {
+    .arena-card-wrapper {
+        max-width: calc(100vw - 1.5rem);
+    }
+
+    .vote-indicator {
+        padding: var(--space-sm) var(--space-md);
+        font-size: 0.75rem;
+    }
+
+    .upvote-indicator {
+        top: -45px;
+    }
+
+    .downvote-indicator {
+        bottom: -45px;
+    }
+
+    .swipe-instructions {
+        gap: var(--space-sm);
+        padding: var(--space-xs) var(--space-sm);
+    }
+
+    .instruction {
+        font-size: 0.6rem;
+    }
+
+    .vote-thumb {
+        width: 80px;
+        height: 80px;
+    }
+
+    .mute-btn {
+        bottom: 80px;
+        width: 36px;
+        height: 36px;
+    }
+}
+
+/* Medium phones */
+@media (min-width: 375px) {
+    .arena-card-wrapper {
+        max-width: 320px;
+    }
+}
+
+/* Larger phones */
+@media (min-width: 414px) {
+    .arena-card-wrapper {
+        max-width: 350px;
+    }
+
+    .vote-thumb {
+        width: 110px;
+        height: 110px;
+    }
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+    .arena-card-wrapper {
+        max-width: 380px;
+    }
+
+    .nav-indicator {
+        display: flex;
+    }
+
+    .vote-thumb {
+        width: 120px;
+        height: 120px;
+    }
+
+    .mute-btn {
+        width: 44px;
+        height: 44px;
+    }
+}
+
+/* ============================================
+   LANDSCAPE MODE
+   ============================================ */
+
+@media (orientation: landscape) and (max-height: 500px) {
+    .arena-card-wrapper {
+        max-width: none;
+        width: auto;
+        height: calc(100vh - 120px);
+        aspect-ratio: auto;
+    }
+
+    .swipe-instructions {
+        top: var(--space-sm);
+    }
+
+    .mute-btn {
+        bottom: 60px;
+    }
+
+    .arena-video-overlay {
+        padding: var(--space-md);
+    }
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    .vote-up .vote-thumb,
+    .vote-down .vote-thumb {
+        animation: none;
+    }
 }

@@ -1,15 +1,141 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="tr">
   <head>
     <meta charset="UTF-8" />
+
+    <!-- Mobile Meta Tags -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, viewport-fit=cover" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="DoIt!" />
+    <meta name="application-name" content="DoIt!" />
+
+    <!-- Theme & Colors -->
+    <meta name="theme-color" content="#8b5cf6" />
+    <meta name="msapplication-TileColor" content="#0a0a0f" />
+    <meta name="msapplication-navbutton-color" content="#8b5cf6" />
+
+    <!-- SEO & Description -->
+    <meta name="description" content="DoIt! - 6 saniyelik video challenge uygulaması. Paylaş, oy ver, kazan!" />
+    <meta name="keywords" content="video, challenge, sosyal medya, TikTok, reels, kısa video" />
+    <meta name="author" content="DoIt! Team" />
+
+    <!-- Open Graph / Social -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="DoIt! - Video Challenge" />
+    <meta property="og:description" content="6 saniyelik video challenge uygulaması. Paylaş, oy ver, kazan!" />
+    <meta property="og:image" content="/og-image.png" />
+    <meta property="og:locale" content="tr_TR" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="DoIt! - Video Challenge" />
+    <meta name="twitter:description" content="6 saniyelik video challenge uygulaması" />
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- Favicon & Icons -->
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta name="theme-color" content="#0a0a0f" />
-    <meta name="description" content="DoIt! - 6 saniyelik video challenge'larla yarış, kazan, eğlen!" />
-    <title>DoIt! - Challenge Sosyal Ağı</title>
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="/icons/icon-152x152.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-192x192.png" />
+    <link rel="apple-touch-icon" sizes="167x167" href="/icons/icon-192x192.png" />
+
+    <!-- Preconnect to External Resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Performance Hints -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+
+    <!-- Prevent Phone Number Detection -->
+    <meta name="format-detection" content="telephone=no" />
+
+    <!-- Security -->
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+    <title>DoIt! - Video Challenge</title>
+
+    <!-- Inline Critical CSS for Faster FCP -->
+    <style>
+      /* Critical CSS - Initial Load */
+      :root {
+        --bg-primary: #0a0a0f;
+        --accent-primary: #8b5cf6;
+      }
+
+      html, body {
+        margin: 0;
+        padding: 0;
+        background: var(--bg-primary);
+        color: #ffffff;
+        font-family: system-ui, -apple-system, sans-serif;
+        min-height: 100vh;
+        min-height: 100dvh;
+      }
+
+      #root {
+        min-height: 100vh;
+        min-height: 100dvh;
+      }
+
+      /* Loading Spinner */
+      .app-loader {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        background: var(--bg-primary);
+        z-index: 9999;
+      }
+
+      .app-loader-spinner {
+        width: 40px;
+        height: 40px;
+        border: 3px solid rgba(139, 92, 246, 0.2);
+        border-top-color: var(--accent-primary);
+        border-radius: 50%;
+        animation: loader-spin 1s linear infinite;
+      }
+
+      .app-loader-text {
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 0.875rem;
+      }
+
+      @keyframes loader-spin {
+        to { transform: rotate(360deg); }
+      }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
+    <!-- Initial Loading State -->
+    <div id="root">
+      <div class="app-loader">
+        <div class="app-loader-spinner"></div>
+        <div class="app-loader-text">Yükleniyor...</div>
+      </div>
+    </div>
+
+    <!-- Main App Script -->
     <script type="module" src="/src/main.jsx"></script>
+
+    <!-- PWA & Mobile Enhancements -->
+    <script>
+      // Detect PWA mode
+      if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+        document.body.classList.add('pwa-mode');
+      }
+
+      // Prevent iOS rubber band effect on body
+      document.body.addEventListener('touchmove', function(e) {
+        if (e.target.closest('.scrollable')) return;
+      }, { passive: true });
+    </script>
   </body>
 </html>

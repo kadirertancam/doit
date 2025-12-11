@@ -1,3 +1,7 @@
+/* ============================================
+   BOTTOM NAVIGATION - Professional Mobile
+   ============================================ */
+
 .bottom-nav {
     position: fixed;
     bottom: 0;
@@ -10,6 +14,12 @@
     border-top: 1px solid var(--border-color);
     padding: var(--space-sm) var(--space-md);
     padding-bottom: max(var(--space-sm), env(safe-area-inset-bottom));
+    transition: transform 0.3s ease;
+}
+
+/* Hide on scroll down (optional - add class via JS) */
+.bottom-nav.hidden {
+    transform: translateY(100%);
 }
 
 .bottom-nav-inner {
@@ -18,6 +28,7 @@
     align-items: center;
     max-width: 480px;
     margin: 0 auto;
+    gap: var(--space-xs);
 }
 
 .nav-item {
@@ -25,45 +36,180 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
+    gap: 2px;
     padding: var(--space-sm);
+    min-width: var(--touch-target);
+    min-height: var(--touch-target);
     text-decoration: none;
     color: var(--text-muted);
-    transition: color 0.3s ease;
+    transition: color 0.2s ease;
+    border-radius: var(--radius-md);
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
 }
 
-.nav-item:hover {
-    color: var(--text-secondary);
+/* Touch feedback */
+.nav-item:active {
+    background: rgba(139, 92, 246, 0.1);
+    transform: scale(0.95);
 }
 
+/* Active state */
 .nav-item-active {
     color: var(--accent-primary);
 }
 
+/* Active indicator line */
 .nav-indicator {
     position: absolute;
     top: -8px;
     left: 50%;
     transform: translateX(-50%);
-    width: 40px;
-    height: 4px;
+    width: 32px;
+    height: 3px;
     background: var(--accent-gradient);
     border-radius: var(--radius-full);
-    box-shadow: var(--accent-glow);
+    box-shadow: 0 0 12px rgba(139, 92, 246, 0.6);
 }
 
+/* Icon styling */
 .nav-icon {
-    transition: transform 0.3s ease;
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
 }
 
 .nav-icon-active {
     transform: scale(1.1);
-    filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.6));
+    filter: drop-shadow(0 0 6px rgba(139, 92, 246, 0.6));
 }
 
+/* Label text */
 .nav-label {
-    font-size: 0.65rem;
-    font-weight: 500;
+    font-size: 0.6rem;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.3px;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+
+/* Smaller phones (320px) */
+@media (max-width: 359px) {
+    .nav-label {
+        font-size: 0.55rem;
+        letter-spacing: 0;
+    }
+
+    .nav-item {
+        padding: var(--space-xs);
+        min-width: 40px;
+    }
+
+    .nav-indicator {
+        width: 24px;
+    }
+}
+
+/* Medium phones (375px+) */
+@media (min-width: 375px) {
+    .nav-label {
+        font-size: 0.65rem;
+    }
+
+    .nav-indicator {
+        width: 36px;
+    }
+}
+
+/* Larger phones (414px+) */
+@media (min-width: 414px) {
+    .nav-item {
+        gap: 4px;
+        padding: var(--space-sm) var(--space-md);
+    }
+
+    .nav-label {
+        font-size: 0.7rem;
+        letter-spacing: 0.5px;
+    }
+
+    .nav-indicator {
+        width: 40px;
+        height: 4px;
+    }
+}
+
+/* Tablet (768px+) */
+@media (min-width: 768px) {
+    .bottom-nav-inner {
+        max-width: 600px;
+    }
+
+    .nav-item {
+        flex-direction: row;
+        gap: var(--space-sm);
+        padding: var(--space-md) var(--space-lg);
+    }
+
+    .nav-label {
+        font-size: 0.8rem;
+    }
+}
+
+/* ============================================
+   LANDSCAPE MODE
+   ============================================ */
+
+@media (orientation: landscape) and (max-height: 500px) {
+    .bottom-nav {
+        padding: var(--space-xs) var(--space-md);
+    }
+
+    .nav-item {
+        padding: var(--space-xs);
+        min-height: 36px;
+    }
+
+    .nav-label {
+        display: none;
+    }
+
+    .nav-indicator {
+        top: -4px;
+        height: 2px;
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+
+/* Focus visible for keyboard navigation */
+.nav-item:focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+    .bottom-nav {
+        border-top-width: 2px;
+    }
+
+    .nav-item-active {
+        text-decoration: underline;
+    }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .nav-item,
+    .nav-icon,
+    .nav-indicator {
+        transition: none;
+    }
 }

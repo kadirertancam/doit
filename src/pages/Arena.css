@@ -1,3 +1,7 @@
+/* ============================================
+   ARENA PAGE - Professional Mobile
+   ============================================ */
+
 .arena-page {
     background: radial-gradient(ellipse at top,
             rgba(239, 68, 68, 0.08) 0%,
@@ -5,9 +9,13 @@
             var(--bg-primary) 60%);
 }
 
+/* ============================================
+   HEADER
+   ============================================ */
+
 .arena-header {
     text-align: center;
-    padding: var(--space-lg) 0 var(--space-md);
+    padding: var(--space-md) 0;
 }
 
 .arena-title-group {
@@ -25,7 +33,7 @@
 
 .arena-header h1 {
     font-family: var(--font-display);
-    font-size: 1.75rem;
+    font-size: clamp(1.5rem, 5vw, 1.75rem);
     font-weight: 800;
     background: linear-gradient(135deg, #ef4444, #a855f7);
     -webkit-background-clip: text;
@@ -35,10 +43,13 @@
 
 .arena-subtitle {
     color: var(--text-muted);
-    font-size: 0.85rem;
+    font-size: clamp(0.75rem, 2.5vw, 0.85rem);
 }
 
-/* Hashtag Filter */
+/* ============================================
+   HASHTAG FILTER
+   ============================================ */
+
 .hashtag-filter {
     display: flex;
     gap: var(--space-sm);
@@ -55,19 +66,28 @@
     border: 1px solid var(--border-color);
     border-radius: var(--radius-full);
     color: var(--text-primary);
-    font-size: 0.85rem;
+    font-size: clamp(0.75rem, 2.5vw, 0.85rem);
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
+    min-height: var(--touch-target);
+    touch-action: manipulation;
 }
 
-.filter-btn:hover {
-    border-color: var(--accent-primary);
+.filter-btn:active {
+    transform: scale(0.98);
+}
+
+@media (hover: hover) {
+    .filter-btn:hover {
+        border-color: var(--accent-primary);
+    }
 }
 
 .filter-btn svg:last-child {
     margin-left: auto;
     color: var(--text-muted);
-    transition: transform 0.3s ease;
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
 }
 
 .filter-btn svg.rotated {
@@ -75,7 +95,8 @@
 }
 
 .filter-emoji {
-    font-size: 1.1rem;
+    font-size: 1rem;
+    flex-shrink: 0;
 }
 
 .clear-filter-btn {
@@ -84,10 +105,21 @@
     border: 1px solid var(--error);
     border-radius: var(--radius-full);
     color: var(--error);
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     cursor: pointer;
     white-space: nowrap;
+    min-height: var(--touch-target);
+    touch-action: manipulation;
+    flex-shrink: 0;
 }
+
+.clear-filter-btn:active {
+    transform: scale(0.95);
+}
+
+/* ============================================
+   HASHTAG PICKER
+   ============================================ */
 
 .arena-hashtag-picker {
     margin-bottom: var(--space-md);
@@ -114,7 +146,13 @@
     border: 2px solid transparent;
     border-radius: var(--radius-md);
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
+    min-height: 56px;
+    touch-action: manipulation;
+}
+
+.arena-hashtag-option:active {
+    transform: scale(0.95);
 }
 
 .arena-hashtag-option:hover,
@@ -124,15 +162,44 @@
 }
 
 .arena-hashtag-option span:first-child {
-    font-size: 1.25rem;
+    font-size: clamp(1rem, 4vw, 1.25rem);
 }
 
 .option-tag-name {
-    font-size: 0.5rem;
+    font-size: 0.45rem;
     color: var(--text-muted);
     text-align: center;
     word-break: break-word;
+    line-height: 1.2;
+    max-width: 100%;
+    overflow: hidden;
 }
+
+.option-count {
+    font-size: 0.55rem;
+    color: var(--accent-primary);
+    font-weight: 600;
+}
+
+.arena-hashtag-option.empty {
+    opacity: 0.5;
+}
+
+.arena-hashtag-option.empty .option-count {
+    color: var(--text-muted);
+}
+
+.filter-count {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    background: var(--bg-tertiary);
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+}
+
+/* ============================================
+   ARENA STATS
+   ============================================ */
 
 .arena-stats {
     display: flex;
@@ -144,6 +211,7 @@
     backdrop-filter: blur(10px);
     border-radius: var(--radius-lg);
     border: 1px solid var(--border-color);
+    flex-wrap: wrap;
 }
 
 .arena-stat {
@@ -154,6 +222,7 @@
 
 .stat-icon {
     color: var(--accent-primary);
+    flex-shrink: 0;
 }
 
 .stat-icon.stat-up {
@@ -171,14 +240,18 @@
 .stat-value {
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: 1rem;
+    font-size: clamp(0.85rem, 2.5vw, 1rem);
     color: var(--text-primary);
 }
 
 .stat-label {
-    font-size: 0.65rem;
+    font-size: 0.6rem;
     color: var(--text-muted);
 }
+
+/* ============================================
+   ARENA PROGRESS
+   ============================================ */
 
 .arena-progress {
     display: flex;
@@ -192,46 +265,71 @@
 }
 
 .progress-text {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     color: var(--text-muted);
     font-weight: 500;
+    white-space: nowrap;
 }
+
+/* ============================================
+   ARENA CONTENT
+   ============================================ */
 
 .arena-content {
     display: flex;
     justify-content: center;
-    padding: var(--space-md) 0;
+    padding: var(--space-sm) 0;
 }
 
-.arena-empty-filter {
+/* ============================================
+   EMPTY STATES
+   ============================================ */
+
+.arena-empty-filter,
+.arena-empty-category {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: var(--space-md);
-    padding: var(--space-2xl);
+    padding: var(--space-xl);
     text-align: center;
     background: var(--bg-card);
     border-radius: var(--radius-lg);
     border: 1px solid var(--border-color);
     width: 100%;
-    max-width: 350px;
+    max-width: 320px;
     aspect-ratio: 9/16;
+    max-height: 500px;
 }
 
-.arena-empty-filter svg {
+.arena-empty-filter svg,
+.arena-empty-category .empty-icon {
     color: var(--accent-primary);
-    opacity: 0.5;
+    opacity: 0.3;
 }
 
-.arena-empty-filter h3 {
+.arena-empty-filter h3,
+.arena-empty-category h3 {
     color: var(--text-primary);
+    font-size: 1rem;
 }
 
-.arena-empty-filter p {
+.arena-empty-filter p,
+.arena-empty-category p {
     color: var(--text-muted);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    line-height: 1.5;
 }
+
+.arena-empty-category {
+    border: 2px dashed var(--border-color);
+    min-height: 350px;
+}
+
+/* ============================================
+   POINTS INFO & XP
+   ============================================ */
 
 .arena-points-info {
     display: flex;
@@ -242,9 +340,11 @@
     background: rgba(251, 191, 36, 0.1);
     border: 1px solid var(--warning);
     border-radius: var(--radius-md);
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     color: var(--warning);
     margin-top: var(--space-md);
+    flex-wrap: wrap;
+    text-align: center;
 }
 
 .arena-reset {
@@ -265,7 +365,7 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: var(--space-sm);
-    font-size: 0.85rem;
+    font-size: 0.8rem;
 }
 
 .xp-header span:first-child {
@@ -277,7 +377,91 @@
     color: var(--accent-primary);
 }
 
-/* Loading State */
+/* ============================================
+   AUTH WARNING
+   ============================================ */
+
+.auth-warning {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    background: rgba(251, 191, 36, 0.1);
+    border: 1px solid var(--warning);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-md);
+    font-size: 0.8rem;
+    color: var(--warning);
+    flex-wrap: wrap;
+}
+
+.auth-warning .btn-sm {
+    margin-left: auto;
+    padding: var(--space-xs) var(--space-sm);
+    font-size: 0.7rem;
+}
+
+/* ============================================
+   LOGIN PROMPT MODAL
+   ============================================ */
+
+.login-prompt-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: var(--z-modal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-md);
+    animation: fade-in 0.2s ease-out;
+}
+
+.login-prompt-modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-xl);
+    background: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    width: 100%;
+    max-width: 320px;
+    animation: scale-in 0.3s ease-out;
+}
+
+.prompt-icon {
+    color: var(--accent-primary);
+    opacity: 0.5;
+}
+
+.login-prompt-modal h3 {
+    font-size: 1.15rem;
+    color: var(--text-primary);
+}
+
+.login-prompt-modal p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.prompt-actions {
+    display: flex;
+    gap: var(--space-sm);
+    width: 100%;
+    flex-direction: column;
+}
+
+.prompt-actions .btn {
+    flex: 1;
+    width: 100%;
+}
+
+/* ============================================
+   LOADING STATE
+   ============================================ */
+
 .loading-state {
     display: flex;
     flex-direction: column;
@@ -294,136 +478,110 @@
 }
 
 @keyframes spin {
-    from {
-        transform: rotate(0deg);
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes scale-in {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+
+/* Small phones */
+@media (max-width: 359px) {
+    .arena-hashtag-grid {
+        grid-template-columns: repeat(4, 1fr);
     }
 
-    to {
-        transform: rotate(360deg);
+    .arena-hashtag-option {
+        padding: var(--space-xs);
+        min-height: 48px;
+    }
+
+    .arena-stats {
+        gap: var(--space-sm);
+        padding: var(--space-xs) var(--space-sm);
+    }
+
+    .stat-label {
+        display: none;
     }
 }
 
-/* Filter Count */
-.filter-count {
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    background: var(--bg-tertiary);
-    padding: 2px 6px;
-    border-radius: var(--radius-sm);
+/* Medium phones */
+@media (min-width: 375px) {
+    .arena-hashtag-option span:first-child {
+        font-size: 1.25rem;
+    }
+
+    .option-tag-name {
+        font-size: 0.5rem;
+    }
+
+    .prompt-actions {
+        flex-direction: row;
+    }
 }
 
-/* Option Count */
-.option-count {
-    font-size: 0.6rem;
-    color: var(--accent-primary);
-    font-weight: 600;
+/* Larger phones */
+@media (min-width: 414px) {
+    .arena-empty-filter,
+    .arena-empty-category {
+        max-width: 350px;
+        max-height: 550px;
+    }
+
+    .arena-stats {
+        gap: var(--space-lg);
+    }
 }
 
-.arena-hashtag-option.empty {
-    opacity: 0.5;
+/* Tablet */
+@media (min-width: 768px) {
+    .arena-hashtag-grid {
+        grid-template-columns: repeat(6, 1fr);
+    }
+
+    .arena-empty-filter,
+    .arena-empty-category {
+        max-width: 400px;
+    }
+
+    .login-prompt-modal {
+        max-width: 400px;
+        padding: var(--space-2xl);
+    }
 }
 
-.arena-hashtag-option.empty .option-count {
-    color: var(--text-muted);
-}
+/* ============================================
+   LANDSCAPE MODE
+   ============================================ */
 
-/* Empty Category */
-.arena-empty-category {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-md);
-    padding: var(--space-2xl);
-    text-align: center;
-    background: var(--bg-card);
-    border-radius: var(--radius-lg);
-    border: 2px dashed var(--border-color);
-    width: 100%;
-    max-width: 350px;
-    min-height: 400px;
-}
+@media (orientation: landscape) and (max-height: 500px) {
+    .arena-header {
+        padding: var(--space-sm) 0;
+    }
 
-.arena-empty-category .empty-icon {
-    color: var(--accent-primary);
-    opacity: 0.3;
-}
+    .arena-subtitle {
+        display: none;
+    }
 
-.arena-empty-category h3 {
-    color: var(--text-primary);
-    font-size: 1.1rem;
-}
+    .arena-empty-filter,
+    .arena-empty-category {
+        aspect-ratio: auto;
+        max-height: 60vh;
+    }
 
-.arena-empty-category p {
-    color: var(--text-muted);
-    font-size: 0.9rem;
-    line-height: 1.5;
-}
-
-/* Auth Warning */
-.auth-warning {
-    display: flex;
-    align-items: center;
-    gap: var(--space-sm);
-    padding: var(--space-sm) var(--space-md);
-    background: rgba(251, 191, 36, 0.1);
-    border: 1px solid var(--warning);
-    border-radius: var(--radius-md);
-    margin-bottom: var(--space-md);
-    font-size: 0.85rem;
-    color: var(--warning);
-}
-
-.auth-warning .btn-sm {
-    margin-left: auto;
-    padding: var(--space-xs) var(--space-sm);
-    font-size: 0.75rem;
-}
-
-/* Login Prompt Modal */
-.login-prompt-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.8);
-    z-index: var(--z-modal);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--space-md);
-}
-
-.login-prompt-modal {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-md);
-    padding: var(--space-2xl);
-    background: var(--bg-secondary);
-    border-radius: var(--radius-lg);
-    text-align: center;
-    max-width: 350px;
-}
-
-.prompt-icon {
-    color: var(--accent-primary);
-    opacity: 0.5;
-}
-
-.login-prompt-modal h3 {
-    font-size: 1.25rem;
-    color: var(--text-primary);
-}
-
-.login-prompt-modal p {
-    color: var(--text-muted);
-}
-
-.prompt-actions {
-    display: flex;
-    gap: var(--space-md);
-    width: 100%;
-}
-
-.prompt-actions .btn {
-    flex: 1;
+    .arena-hashtag-grid {
+        grid-template-columns: repeat(8, 1fr);
+    }
 }
